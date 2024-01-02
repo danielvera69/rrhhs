@@ -1,7 +1,11 @@
 {% load security_extras %}
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
 <section class="form-group">
-   {{ field|as_crispy_field }}
+   <label class="control-label fw-bold" for="{{ field.id_for_label }}">
+      {{ field.label }}:
+   </label>
+   {{ field|add_class:"form-control" }}
  
    <div class="invalid-feedback">
        {{ field.errors }}

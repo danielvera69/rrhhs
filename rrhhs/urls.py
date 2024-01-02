@@ -23,7 +23,9 @@ urlpatterns = [
     path('', home.HomeTemplateView.as_view(),name="home"),
     path('modules/', home.ModuloTemplateView.as_view(),name="modules"),
     path('core/',include('apps.core.urls',namespace="core") ),
+    path('personal_file/',include('apps.personal_file.urls',namespace="personal_file") ),
     path('security/',include('apps.security.urls',namespace="security") ),
+    path('payment_role/',include('apps.payment_role.urls',namespace="payment_role") ),
   
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

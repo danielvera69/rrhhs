@@ -58,6 +58,7 @@ class UpdateViewMixin(object):
 class DeleteViewMixin(object):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        print("entro al deleteMixin")
         context['title'] = f'{self.model._meta.verbose_name_plural}'
         context['permissions'] = self._get_permission_dict_of_group()
         MenuModule(self.request).fill(context)
@@ -70,7 +71,7 @@ class DeleteViewMixin(object):
 # Permisos de urls o modulos
 class PermissionMixin(object):
     permission_required = ''
-
+    print("entro al permission")
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         try:

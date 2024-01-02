@@ -1,11 +1,42 @@
 import json
 from django.db import models
+from crum import get_current_user
 from django.forms import model_to_dict
 from rrhhs import utils
 
-class Country(models.Model):
+class ModelBase(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, blank=True,null=True)
+    created_by = models.CharField(max_length=100, blank=True,null=True,editable=False)
+    updated_at = models.DateTimeField(auto_now=True, blank=True,null=True)
+    update_by = models.CharField(max_length=100,blank=True,null=True,editable=False)
+
+    @property
+    def created_at_format(self):
+        return self.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    @property
+    def updated_at_format(self):
+        return self.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+      
+
+    def save(self, *args, **kwargs):
+        try:
+            user = get_current_user()
+            if self._state.adding:
+                self.created_by = user.username
+            else:
+                self.update_by = user.username
+        except:
+            pass
+
+        models.Model.save(self)
+
+    class Meta:
+        abstract = True
+
+class Country(ModelBase):
     name = models.CharField(verbose_name='Nombre', max_length=50, unique=True)
-    state = models.BooleanField(verbose_name='Activo', default=True)
+    active = models.BooleanField(verbose_name='Activo', default=True)
   
     def __str__(self):
         return self.name
@@ -19,9 +50,10 @@ class Country(models.Model):
         verbose_name_plural = 'Paises'
         ordering = ['-name']
 
-class City(models.Model):
+class City(ModelBase):
     country = models.ForeignKey(Country,on_delete=models.PROTECT,verbose_name="Pais")
     name = models.CharField('Descripcion',max_length=100)
+    active = models.BooleanField(verbose_name='Activo', default=True)
  
     def __str__(self):
         return self.name
@@ -35,7 +67,7 @@ class City(models.Model):
         verbose_name_plural = 'Ciudades'
         ordering = ['-name']
 
-class Organization(models.Model):
+class Organization(ModelBase):
     name = models.CharField(
         verbose_name='Nombre de la organización',
         max_length=100,
@@ -66,11 +98,13 @@ class Organization(models.Model):
     latitude = models.CharField("Latitud", max_length=100, blank=True, null=True)
     longitude = models.CharField("Longitud", max_length=100, blank=True, null=True)
     matriz = models.BooleanField(default=False)
-  
+    active = models.BooleanField(verbose_name='Activo', default=True)
+ 
     @staticmethod
     def get_organization_first():
         return Organization.objects.filter(matriz=True).order_by('id').first()
 
+    # para trabajarlo como objeto en js
     def of_json_pure_to_dumps(self):
         return json.dumps(self.get_model_dict())
 

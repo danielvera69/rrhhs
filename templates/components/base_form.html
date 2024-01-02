@@ -24,11 +24,12 @@
         {% csrf_token %}
         {% block controls %} {% endblock %}
         {% block buttons %} 
-            <button class="btn btn-primary btn-nuevo" type="submit">
+            <button id="btnGrabar" class="btn btn-primary btn-nuevo" type="submit">
                 {{grabar}}
             </button>
             <a class="btn btn-outline-danger ms-2" href="{{ back_url }}">Cancelar</a>
         {% endblock %}
+        
     </form>
  </section>
 {% endblock content %}

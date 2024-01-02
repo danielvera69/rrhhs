@@ -746,13 +746,17 @@
   <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script src="{% static 'assets/js/fetch.js' %}"></script>
+  <script src="{% static 'lib/js.cookie.min.js' %}"></script>
   <script>
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
       })
   </script>
-  {% block archivo_js %}{% endblock %}
+  {% block file_js %}{% endblock %}
+  {% block script_js %} {% endblock %}
+  {% block modal %}{% endblock %}
 </body>
 
 </html>

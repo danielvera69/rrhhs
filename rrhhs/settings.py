@@ -28,16 +28,28 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # apps de django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # apps de terceros
+    'widget_tweaks',
     'crispy_forms',
     'crispy_bootstrap5',
+    # apps de usuario
     'apps.core',
+    'apps.personal_file',
     'apps.security',
+    'apps.personal_training',
+    'apps.personal_debt',
+    'apps.personal_selection',
+    'apps.personal_evaluation',
+    'apps.personal_vacation',
+    'apps.biometric_clock',
+    'apps.payment_role',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

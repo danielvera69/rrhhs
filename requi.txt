@@ -3,6 +3,7 @@ crispy-bootstrap5==2023.10
 Django==4.2.8
 django-crispy-forms==2.1
 django-crum==0.7.9
+django-widget-tweaks==1.5.0
 Pillow==10.1.0
 psycopg2-binary==2.9.1
 python-dotenv==0.21.1

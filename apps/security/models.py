@@ -5,12 +5,12 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
 from django.db import models
 from django.forms import model_to_dict
-from apps.core.models import Organization
+from apps.core.models import ModelBase, Organization
 from rrhhs import utils
 
 
 # ficha,prestamos,nomina
-class Menu(models.Model):
+class Menu(ModelBase):
     name = models.CharField(verbose_name='Nombre', max_length=150, unique=True)
     icon = models.CharField(verbose_name='Icono', max_length=100)
   
@@ -32,11 +32,11 @@ class Menu(models.Model):
         ordering = ['-name']
 
 # menu ficha: modulos: empleado, cargo
-# permisos: add_empleado, view_empleado
-class Module(models.Model):
+# permisos: add_empleado, view_empleado, change_empleado, delete_empleado
+class Module(ModelBase):
     url = models.CharField(verbose_name='Url', max_length=100, unique=True)
     name = models.CharField(verbose_name='Nombre', max_length=100)
-    menu = models.ForeignKey(Menu, on_delete=models.PROTECT)
+    menu = models.ForeignKey(Menu, on_delete=models.PROTECT,verbose_name='Menu')
     description = models.CharField(
         verbose_name='Descripción',
         max_length=200,
@@ -72,9 +72,9 @@ class Module(models.Model):
 # grupo: menu:     modulos : add,view...
 # admi: ficha: sobretiempo,rubros: add_sobretiemp,view_sobretiemp,add_rubros,view_rubros
 # auditoria: sobretiempo,rubros: add_sobretiemp,view_sobretiemp,add_rubros,view_rubros
-class GroupModulePermission(models.Model):
-    group = models.ForeignKey(Group, on_delete=models.PROTECT)
-    module = models.ForeignKey(Module, on_delete=models.PROTECT)
+class GroupModulePermission(ModelBase):
+    group = models.ForeignKey(Group, on_delete=models.PROTECT,verbose_name='Grupo')
+    module = models.ForeignKey(Module, on_delete=models.PROTECT,verbose_name='Modulo')
     permissions = models.ManyToManyField(Permission)
 
     def __str__(self):
@@ -107,7 +107,7 @@ class User(AbstractUser):
         null=True
     )
     email = models.EmailField('email address',unique=True)
-    organization = models.ForeignKey(Organization,on_delete=models.PROTECT, blank=True,null=True)
+    sucursal = models.ForeignKey(Organization,on_delete=models.PROTECT, blank=True,null=True)
     direction=models.CharField('Direccion',max_length=200,blank=True,null=True)
     phone=models.CharField('Telefono',max_length=50,blank=True,null=True)
   

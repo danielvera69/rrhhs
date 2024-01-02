@@ -15,7 +15,7 @@ class UserForm(ModelForm):
             "password",
             "dni",
             "email",
-            "organization",
+            "sucursal",
             "groups",
             "image",
             "is_active"
