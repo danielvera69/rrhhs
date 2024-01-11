@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.payment_role.models import Calendar, Item, Overtime, OvertimeDetail, RoleFrequency
+from apps.payment_role.models import Calendar, Item, Overtime, OvertimeDetail, RoleFrequency, TypePermission, WorkPermission
 
 # formfield_overrides = {
 #         models.TextField: {
@@ -33,5 +33,7 @@ admin.site.register(Overtime, OvertimeAdmin)
 admin.site.register(Calendar)
 admin.site.register(Item)
 admin.site.register(RoleFrequency)
+admin.site.register(TypePermission)
+admin.site.register(WorkPermission)
 
 
